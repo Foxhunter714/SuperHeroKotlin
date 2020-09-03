@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-const val BASE_URL = "https://api.themoviedb.org"
+const val BASE_URL = "https://akabab.github.io/superhero-api/api"
 
 class RetrofitClient {
     companion object{
