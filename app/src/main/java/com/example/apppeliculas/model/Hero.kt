@@ -1,6 +1,6 @@
-package com.example.apppeliculas
+package com.example.apppeliculas.model
 
-data class ListHero(
+data class Hero(
     val appearance: Appearance,
     val biography: Biography,
     val connections: Connections,

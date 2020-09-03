@@ -1,4 +1,4 @@
-package com.example.apppeliculas
+package com.example.apppeliculas.model
 
 data class Appearance(
     val eyeColor: String,

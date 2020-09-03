@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apppeliculas.model.Hero
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_hero.view.*
 
-class HeroAdapter(private var heroDataset: MutableList<ListHero>) : RecyclerView.Adapter<HeroAdapter.HeroViewHolder>() {
+class HeroAdapter(private var heroDataset: MutableList<Hero>) : RecyclerView.Adapter<HeroAdapter.HeroViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hero, parent, false)
@@ -21,7 +22,7 @@ class HeroAdapter(private var heroDataset: MutableList<ListHero>) : RecyclerView
         /*holder.textBiography.text = heroDataset.get(position).biography*/
 
         Picasso.get()
-            .load("https://image.tmdb.org/t/p/w500/" + heroDataset.get(position).images)
+            .load(heroDataset.get(position).images.md)
             .into(holder.imageHero);
     }
 
@@ -29,7 +30,7 @@ class HeroAdapter(private var heroDataset: MutableList<ListHero>) : RecyclerView
         return heroDataset.size
     }
 
-    fun updateItems(it: List<ListHero>) {
+    fun updateItems(it: List<Hero>) {
         heroDataset.clear()
         heroDataset.addAll(it)
         notifyDataSetChanged()
