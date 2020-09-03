@@ -18,8 +18,8 @@ import retrofit2.Response
 
 class Repository(context: Context) {
 
-    var listHero = MutableLiveData<List<Hero>>()
     var heroDatabase = HeroDatabase.getDatabase(context)
+    var listHero = heroDatabase.getHeroDao().getMinimalHero()
     fun loadApiData() {
         val call = RetrofitClient.retrofitInstance().listHero()
 
@@ -29,7 +29,6 @@ class Repository(context: Context) {
             override fun onResponse(call: Call<List<Hero>>, response: Response<List<Hero>>) {
                 Log.d("Adapter", "${response.code()}")
                 Log.d("Adapter", "${response.body()}")
-                listHero.value = response.body()
                 saveDatabase(heroConverter(response.body()!!))
             }
 

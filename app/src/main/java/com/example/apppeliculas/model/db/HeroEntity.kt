@@ -10,8 +10,8 @@ import com.example.apppeliculas.model.Powerstats
 data class HeroEntity(
     @PrimaryKey val id: Int,
     val name : String,
-    @Embedded val powerstats: Powerstats,
+    @Embedded(prefix = "ps_") val powerstats: Powerstats,
     val slug: String,
-    @Embedded val images : Images
+    @Embedded(prefix = "images_") val images : Images
 )
 
