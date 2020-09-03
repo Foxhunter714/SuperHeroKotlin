@@ -33,7 +33,7 @@ class Repository(context: Context) {
             }
 
             override fun onFailure(call: Call<List<Hero>>, t: Throwable) {
-                Log.d("Adapter", "Error al cargar peliculas $t")
+                Log.d("Adapter", "Error al cargar heroes $t")
             }
         })
     }
