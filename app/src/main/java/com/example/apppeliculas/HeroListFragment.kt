@@ -1,6 +1,7 @@
 package com.example.apppeliculas
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.apppeliculas.model.db.HeroMini
 import com.example.apppeliculas.viewmodel.HeroViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
+import com.example.apppeliculas.HeroListFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +29,7 @@ private var heroList = ArrayList<HeroMini>()
 private lateinit var adapter: HeroAdapter
 private lateinit var heroViewModel : HeroViewModel
 
-class HeroListFragment : Fragment() {
+class HeroListFragment : Fragment(), NotifyClick {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -70,13 +72,20 @@ class HeroListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HeroAdapter(heroList)
+        adapter = HeroAdapter(heroList,this)
         heroRecycler.adapter = adapter
         //TODO cambiar
         //heroViewModel = ViewModelProvider(this).get(HeroViewModel::class.java)
         val heroViewModel: HeroViewModel by activityViewModels()
-        heroViewModel.listHero.observe(viewLifecycleOwner, Observer{
+        heroViewModel.listHero.observe(viewLifecycleOwner, Observer {
             adapter.updateItems(it)
         })
     }
+
+    override fun notifyClick(heroMini: HeroMini) {
+        Log.d("notify", "")
+    }
 }
+    interface NotifyClick{
+        fun notifyClick(heroMini: HeroMini)
+    }

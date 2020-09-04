@@ -10,7 +10,7 @@ import com.example.apppeliculas.model.db.HeroMini
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_hero.view.*
 
-class HeroAdapter(private var heroDataset: MutableList<HeroMini>) : RecyclerView.Adapter<HeroAdapter.HeroViewHolder>() {
+class HeroAdapter(private var heroDataset: MutableList<HeroMini>, val notifier: NotifyClick) : RecyclerView.Adapter<HeroAdapter.HeroViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hero, parent, false)
@@ -25,6 +25,10 @@ class HeroAdapter(private var heroDataset: MutableList<HeroMini>) : RecyclerView
         Picasso.get()
             .load(heroDataset.get(position).images_sm)
             .into(holder.imageHero);
+        holder.itemView.setOnClickListener{
+            Log.d("ViewHolder", "${heroDataset.get(position)}")
+            notifier.notifyClick(heroDataset.get(position))
+        }
     }
 
     override fun getItemCount(): Int {
