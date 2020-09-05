@@ -28,8 +28,8 @@ private const val ARG_PARAM2 = "param2"
 private var heroList = ArrayList<HeroMini>()
 private lateinit var adapter: HeroAdapter
 private lateinit var heroViewModel : HeroViewModel
-
-class HeroListFragment : Fragment(), NotifyClick {
+//Parte del callback el NotifyClick
+class HeroListFragment : Fragment() /*, NotifyClick*/ {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -72,7 +72,10 @@ class HeroListFragment : Fragment(), NotifyClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HeroAdapter(heroList,this)
+        //Parte del callback
+        //adapter = HeroAdapter(heroList,this)
+        adapter = HeroAdapter(heroList)
+
         heroRecycler.adapter = adapter
         //TODO cambiar
         //heroViewModel = ViewModelProvider(this).get(HeroViewModel::class.java)
@@ -80,12 +83,18 @@ class HeroListFragment : Fragment(), NotifyClick {
         heroViewModel.listHero.observe(viewLifecycleOwner, Observer {
             adapter.updateItems(it)
         })
+        adapter.heroSelected.observe(viewLifecycleOwner, Observer {
+            Log.d("lifeCycleOwner", "heroe seleccionado $it")
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HeroDetailFragment.newInstance("", ""), "detail").
+                    addToBackStack("detail").commit()
+        })
     }
-
-    override fun notifyClick(heroMini: HeroMini) {
+}
+    //Parte del callback
+    /*override fun notifyClick(heroMini: HeroMini) {
         Log.d("notify", "")
     }
 }
     interface NotifyClick{
         fun notifyClick(heroMini: HeroMini)
-    }
+    }*/

@@ -4,18 +4,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apppeliculas.model.Hero
 import com.example.apppeliculas.model.db.HeroMini
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_hero.view.*
-
-class HeroAdapter(private var heroDataset: MutableList<HeroMini>, val notifier: NotifyClick) : RecyclerView.Adapter<HeroAdapter.HeroViewHolder>() {
+//Parte del callback el notifier
+class HeroAdapter(private var heroDataset: MutableList<HeroMini>/*val notifier: NotifyClick*/) : RecyclerView.Adapter<HeroAdapter.HeroViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hero, parent, false)
         return HeroViewHolder(view)
     }
+    val heroSelected = MutableLiveData<HeroMini>()
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
         Log.d("Adapter", "${heroDataset.get(position)}")
@@ -27,13 +29,18 @@ class HeroAdapter(private var heroDataset: MutableList<HeroMini>, val notifier: 
             .into(holder.imageHero);
         holder.itemView.setOnClickListener{
             Log.d("ViewHolder", "${heroDataset.get(position)}")
-            notifier.notifyClick(heroDataset.get(position))
+            //Parte del callback
+            //notifier.notifyClick(heroDataset.get(position))
+            heroSelected.value = heroDataset.get(position)
+
         }
     }
 
     override fun getItemCount(): Int {
         return heroDataset.size
     }
+
+
 
     fun updateItems(it: List<HeroMini>) {
         heroDataset.clear()
