@@ -1,4 +1,5 @@
-package com.example.apppeliculas
+package com.example.apppeliculas.view
+
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,9 @@ import com.example.apppeliculas.model.db.HeroMini
 import com.example.apppeliculas.viewmodel.HeroViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
-import com.example.apppeliculas.HeroListFragment
+import com.example.apppeliculas.view.HeroAdapter
+import com.example.apppeliculas.view.HeroListFragment
+import com.example.apppeliculas.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,7 +88,7 @@ class HeroListFragment : Fragment() /*, NotifyClick*/ {
         })
         adapter.heroSelected.observe(viewLifecycleOwner, Observer {
             Log.d("lifeCycleOwner", "heroe seleccionado $it")
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HeroDetailFragment.newInstance("", ""), "detail").
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HeroDetailFragment.newInstance(it.id.toString(), ""), "detail").
                     addToBackStack("detail").commit()
         })
     }

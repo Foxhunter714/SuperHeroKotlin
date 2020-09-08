@@ -1,4 +1,4 @@
-package com.example.apppeliculas
+package com.example.apppeliculas.view
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apppeliculas.R
 import com.example.apppeliculas.model.Hero
 import com.example.apppeliculas.model.db.HeroMini
 import com.squareup.picasso.Picasso
@@ -27,11 +28,12 @@ class HeroAdapter(private var heroDataset: MutableList<HeroMini>/*val notifier: 
         Picasso.get()
             .load(heroDataset.get(position).images_sm)
             .into(holder.imageHero);
-        holder.itemView.setOnClickListener{
+        holder.buttonHero.setOnClickListener{
             Log.d("ViewHolder", "${heroDataset.get(position)}")
             //Parte del callback
             //notifier.notifyClick(heroDataset.get(position))
             heroSelected.value = heroDataset.get(position)
+
 
         }
     }
@@ -51,6 +53,7 @@ class HeroAdapter(private var heroDataset: MutableList<HeroMini>/*val notifier: 
     class HeroViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textTitle = itemView.textViewTitle
         var imageHero = itemView.imageView
+        var buttonHero = itemView.button
         /*var textBiography = itemView.textViewBiography*/
     }
 }

@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.apppeliculas.model.Powerstats
 
 @Dao
 interface DaoHero {
@@ -19,4 +20,6 @@ interface DaoHero {
     @Query("SELECT id, name, images_sm FROM hero_table")
     fun getMinimalHero() : LiveData<List<HeroMini>>
 
+    @Query("SELECT * FROM hero_table WHERE id = :id")
+    fun getHero(id: Int) : LiveData<HeroEntity>
 }

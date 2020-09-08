@@ -2,10 +2,7 @@ package com.example.apppeliculas.model
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import com.example.apppeliculas.RetrofitClient
-import com.example.apppeliculas.model.db.DaoHero
+import androidx.lifecycle.LiveData
 import com.example.apppeliculas.model.db.HeroDatabase
 import com.example.apppeliculas.model.db.HeroEntity
 import kotlinx.coroutines.CoroutineScope
@@ -20,10 +17,11 @@ class Repository(context: Context) {
 
     var heroDatabase = HeroDatabase.getDatabase(context)
     var listHero = heroDatabase.getHeroDao().getMinimalHero()
+
+    /*var listStats = heroDatabase.getHeroDao().getStatsHero()*/
+
     fun loadApiData() {
         val call = RetrofitClient.retrofitInstance().listHero()
-
-
 
         call.enqueue(object : Callback<List<Hero>> {
             override fun onResponse(call: Call<List<Hero>>, response: Response<List<Hero>>) {
@@ -38,10 +36,14 @@ class Repository(context: Context) {
         })
     }
     fun heroConverter(listHero:List<Hero>): List<HeroEntity>{
-        return listHero.map{ hero -> HeroEntity(hero.id, hero.name, hero.powerstats, hero.slug, hero.images)}
+        return listHero.map{ hero -> HeroEntity(hero.id, hero.name, hero.powerstats, hero.slug, hero.images/*, hero.work, hero. biography, hero.connections*/)}
     }
 
     fun saveDatabase(listHeroEntity: List<HeroEntity>){
        CoroutineScope(Dispatchers.IO).launch {heroDatabase.getHeroDao().insertHero(listHeroEntity)}
+    }
+
+    fun getDetails(param1: String): LiveData<HeroEntity> {
+        return heroDatabase.getHeroDao().getHero(param1.toInt())
     }
 }

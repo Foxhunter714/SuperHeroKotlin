@@ -1,6 +1,5 @@
-package com.example.apppeliculas
+package com.example.apppeliculas.model
 
-import com.example.apppeliculas.model.HeroAPI
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
