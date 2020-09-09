@@ -29,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
  */
 
 private var heroList = ArrayList<HeroMini>()
-private lateinit var adapter: HeroAdapter
+internal lateinit var adapter: HeroAdapter
 private lateinit var heroViewModel : HeroViewModel
 //Parte del callback el NotifyClick
 class HeroListFragment : Fragment() /*, NotifyClick*/ {

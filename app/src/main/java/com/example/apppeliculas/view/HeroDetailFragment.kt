@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import com.example.apppeliculas.R
 import com.example.apppeliculas.model.db.HeroEntity
 import com.example.apppeliculas.model.db.HeroMini
+import com.example.apppeliculas.view.HeroListFragment.Companion.newInstance
+import com.example.apppeliculas.view.HeroStats.Companion.newInstance
 import com.example.apppeliculas.viewmodel.HeroViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_hero_detail.*
@@ -48,18 +50,22 @@ class HeroDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         Log.d("parametro1", param1!!)
+
+
         val heroViewModel: HeroViewModel by activityViewModels()
-        heroViewModel.getDetails(param1!!).observe(viewLifecycleOwner, Observer{
-            Log.d("Parametro Observado", "${it!!.toString()}")
-            Picasso.get().load(it!!.images.md).into(imageView2)
-            textViewTitle2.text = it!!.name
-            combat.text = it!!.powerstats.combat.toString()
-            durability.text = it!!.powerstats.durability.toString()
-            intelligence.text = it!!.powerstats.intelligence.toString()
-            power.text = it!!.powerstats.power.toString()
-            speed.text = it!!.powerstats.speed.toString()
-            strength.text = it!!.powerstats.strength.toString()
-        })
+        heroViewModel.run {
+            getDetails(param1!!).observe(viewLifecycleOwner, Observer{
+                Log.d("Parametro Observado", "${it!!.toString()}")
+                Picasso.get().load(it!!.images.md).into(imageView2)
+                textViewTitle2.text = it!!.name
+                combat.text = it!!.powerstats.combat.toString()
+                durability.text = it!!.powerstats.durability.toString()
+                intelligence.text = it!!.powerstats.intelligence.toString()
+                power.text = it!!.powerstats.power.toString()
+                speed.text = it!!.powerstats.speed.toString()
+                strength.text = it!!.powerstats.strength.toString()})
+
+                        }
 
         return inflater.inflate(R.layout.fragment_hero_detail, container, false)
     }
@@ -88,6 +94,10 @@ class HeroDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("Hero", "Aquí se abrio el heroe $param1")
         /*Picasso.get().load()*/
+        button2.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HeroStats.newInstance("", ""), "detail").
+            addToBackStack("detail").commit()
+        }
     }
 
 }

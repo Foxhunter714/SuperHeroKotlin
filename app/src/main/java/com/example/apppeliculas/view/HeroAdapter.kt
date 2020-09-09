@@ -33,8 +33,6 @@ class HeroAdapter(private var heroDataset: MutableList<HeroMini>/*val notifier: 
             //Parte del callback
             //notifier.notifyClick(heroDataset.get(position))
             heroSelected.value = heroDataset.get(position)
-
-
         }
     }
 

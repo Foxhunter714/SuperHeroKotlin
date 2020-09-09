@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="59dp"
-        android:text="Button"
+        android:text="Detalles"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTitle"
         app:layout_constraintStart_toEndOf="@+id/textViewTitle"
         app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
