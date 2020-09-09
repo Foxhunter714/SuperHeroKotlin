@@ -44,6 +44,8 @@ class Repository(context: Context) {
     }
 
     fun getDetails(param1: String): LiveData<HeroEntity> {
+        Log.d("Parametro 1", "${param1}")
         return heroDatabase.getHeroDao().getHero(param1.toInt())
+
     }
 }

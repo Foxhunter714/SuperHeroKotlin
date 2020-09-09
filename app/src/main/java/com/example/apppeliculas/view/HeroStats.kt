@@ -8,13 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.apppeliculas.R
+import com.example.apppeliculas.viewmodel.HeroViewModel
 import com.github.mikephil.charting.charts.RadarChart
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
+import kotlinx.android.synthetic.main.fragment_hero_stats.*
 import java.lang.Math.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,12 +30,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HeroStats.newInstance] factory method to
  * create an instance of this fragment.
  */
+private lateinit var herViewModel: HeroViewModel
 class HeroStats : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
-    private lateinit var chart1: RadarChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,37 +48,44 @@ class HeroStats : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fun setData() {
-            val mul = 80f
-            val min = 20f
-            val cnt = 5
-            val entries1 = ArrayList<RadarEntry>()
-            //val entries1 = repository.getDetails(param1)
-            for (i in 0 until cnt) {
-                var val1 = (Math.random() * mul) + min
-                entries1.add(RadarEntry(val1.toFloat()))
-                Log.d("Aquí llegan los datos", "$val1")
-            }
-            val set1 = RadarDataSet(entries1, "Powerstats graphics")
-            set1.color = Color.rgb(103, 110, 129)
-            set1.fillColor = Color.rgb(103, 110, 129)
-            set1.setDrawFilled(true)
-            set1.fillAlpha = 180
-            set1.lineWidth = 2f
-            set1.isDrawHighlightCircleEnabled = true
-            set1.setDrawHighlightIndicators(false)
+        //val heroViewModel: HeroViewModel by activityViewModels()
+        //heroViewModel.run{
+            
+        //}
+       return inflater.inflate(R.layout.fragment_hero_stats, container, false)
+}
+    private fun setData() {
+        val heroViewModel: HeroViewModel by activityViewModels()
+        heroViewModel.getDetails(param1!!).observe(viewLifecycleOwner, Observer {
+                val comb = it!!.powerstats.combat
+                val dur = it!!.powerstats.durability
+                val intel = it!!.powerstats.intelligence
+                val pow = it!!.powerstats.power
+                val spe = it!!.powerstats.speed
+                val str = it!!.powerstats.strength
+                val entries1 = ArrayList<RadarEntry>()
+                entries1.add(RadarEntry(comb.toFloat()))
+                entries1.add(RadarEntry(dur.toFloat()))
+                entries1.add(RadarEntry(intel.toFloat()))
+                entries1.add(RadarEntry(pow.toFloat()))
+                entries1.add(RadarEntry(spe.toFloat()))
+                entries1.add(RadarEntry(str.toFloat()))
+                val set1 = RadarDataSet(entries1, "Powerstats graphics")
+                val sets = ArrayList<IRadarDataSet>()
+                sets.add(set1)
+                val data = RadarData(sets)
+                data.setValueTextSize(8f)
+                data.setDrawValues(false)
+                data.setValueTextColor(Color.WHITE)
+                chart1.data = data
+                chart1.invalidate()
 
-            val sets = ArrayList<RadarDataSet>()
-            sets.add(set1)
-            val data = RadarData(sets as List<IRadarDataSet>?)
-            data.setValueTextSize(8f)
-            data.setDrawValues(false)
-            data.setValueTextColor(Color.WHITE)
-            chart1.data = data
-            chart1.invalidate()
+            })
+
         }
-        return inflater.inflate(R.layout.fragment_hero_stats, container, false)
-    }
+
+    
+
 
     companion object {
         /**
@@ -100,5 +109,9 @@ class HeroStats : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setData()
+
     }
+
+
 }

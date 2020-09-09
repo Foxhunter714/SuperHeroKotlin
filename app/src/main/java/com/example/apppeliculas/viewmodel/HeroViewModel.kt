@@ -24,4 +24,5 @@ public class HeroViewModel(application: Application): AndroidViewModel(applicati
     fun getDetails(param1: String): LiveData<HeroEntity> {
         return repository.getDetails(param1)
     }
+
 }

@@ -64,8 +64,7 @@ class HeroDetailFragment : Fragment() {
                 power.text = it!!.powerstats.power.toString()
                 speed.text = it!!.powerstats.speed.toString()
                 strength.text = it!!.powerstats.strength.toString()})
-
-                        }
+             }
 
         return inflater.inflate(R.layout.fragment_hero_detail, container, false)
     }
@@ -95,7 +94,7 @@ class HeroDetailFragment : Fragment() {
         Log.d("Hero", "Aquí se abrio el heroe $param1")
         /*Picasso.get().load()*/
         button2.setOnClickListener{
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HeroStats.newInstance("", ""), "detail").
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.container_fragment, HeroStats.newInstance(param1!! , ""), "detail").
             addToBackStack("detail").commit()
         }
     }
