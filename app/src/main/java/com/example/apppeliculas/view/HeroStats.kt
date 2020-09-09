@@ -48,10 +48,6 @@ class HeroStats : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //val heroViewModel: HeroViewModel by activityViewModels()
-        //heroViewModel.run{
-            
-        //}
        return inflater.inflate(R.layout.fragment_hero_stats, container, false)
 }
     private fun setData() {
