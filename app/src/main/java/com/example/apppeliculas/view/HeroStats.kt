@@ -70,7 +70,14 @@ class HeroStats : Fragment() {
                 entries1.add(RadarEntry(pow.toFloat()))
                 entries1.add(RadarEntry(spe.toFloat()))
                 entries1.add(RadarEntry(str.toFloat()))
-                val set1 = RadarDataSet(entries1, "Powerstats graphics")
+                val set1 = RadarDataSet(entries1, "Powestats ${it!!.name}")
+                set1.color = Color.rgb(103, 110, 129)
+                set1.fillColor = Color.rgb(103, 110, 129)
+                set1.setDrawFilled(true)
+                set1.fillAlpha = 180
+                set1.lineWidth = 2f
+                set1.isDrawHighlightCircleEnabled = true
+                set1.setDrawHighlightIndicators(false)
                 val sets = ArrayList<IRadarDataSet>()
                 sets.add(set1)
                 val data = RadarData(sets)
